@@ -1,0 +1,31 @@
+.dashicons-dashboard:before {
+    content: "\f226";
+}
+
+.dashicons-before:before {
+    display: inline-block;
+    line-height: 1;
+    font-family: dashicons;
+    text-decoration: inherit;
+    font-weight: normal;
+    font-style: normal;
+    vertical-align: top;
+    text-align: center;
+    transition: color .1s ease-in 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.devIcon:before {
+	padding: 6px 4px 0 0;
+    color: #fff; 
+    font-size: 25px;  
+}
+
+li#wp-admin-bar-developer-tool {
+    background: #2786bd !important;
+}
+
+li#wp-admin-bar-developer-tool .ab-item {
+    padding: 0 10px 0 8px !important;
+}
