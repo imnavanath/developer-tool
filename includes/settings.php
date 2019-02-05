@@ -23,10 +23,10 @@ defined( 'ABSPATH' ) || exit;
 </style>
 
 <div class="wrap">
-    <h2> <?php _e( 'Error Log','developer-tool' );?> </h2>
+    <h2> <?php _e( 'Error Log','developer-tool' ); ?> </h2>
     <?php
     if ( isset( $_POST['clearlog'] ) ) {
-        $responce = clear_debug_log();
+        $responce = dev_tool_helper()->clear_debug_log();
         ?>
         <div class="<?php echo $responce['class'];?> settings-error"> 
             <p> <strong> <?php echo $responce['message']; ?> </strong> </p>
@@ -34,15 +34,7 @@ defined( 'ABSPATH' ) || exit;
         <?php
     }
 
-    $content = read_debug_log_file( 'wp-content/debug.log' );
-
-    if ( ! empty( $content ) ) { ?>
-        <style type="text/css">
-            li#wp-admin-bar-developer-tool {
-                background: red !important;
-            }
-        </style>
-    <?php }
+    $content = dev_tool_helper()->read_debug_log_file( 'wp-content/debug.log' );
 
     if( $content !== false ) {
 
@@ -60,7 +52,7 @@ defined( 'ABSPATH' ) || exit;
 </div>
 
 <div class="wrap">
-    <h2><?php _e( 'Debug Settings','developer-tool' );?></h2>
+    <h2><?php _e( 'Debug Settings', 'developer-tool' );?></h2>
     <form method="post" action="">
         <table class="form-table">
             <tbody>
@@ -76,7 +68,7 @@ defined( 'ABSPATH' ) || exit;
                     </td>
                 </tr>
                 <tr>
-                    <th><?php _e( 'Enable Debug Settings','developer-tool' );?></th>
+                    <th><?php _e( 'Enable Debug Settings', 'developer-tool' );?></th>
                     <td>
                         <fieldset>
                             <div>
@@ -91,7 +83,7 @@ defined( 'ABSPATH' ) || exit;
 
                             <div>
                                 <label for="error_log">
-                                    <input name="error_log" type="checkbox" id="error_log" value="1" <?php if (defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG == true) { ?>checked="checked"<?php } ?>>
+                                    <input name="error_log" type="checkbox" id="error_log" value="1" <?php if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG == true ) { ?>checked="checked"<?php } ?>>
                                     <?php _e( 'Enable debug logging to the /wp-content/debug.log file => ','developer-tool' );?> 
                                 </label>
                                 <span class="description">

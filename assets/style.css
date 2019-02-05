@@ -1,8 +1,8 @@
-.dashicons-dashboard:before {
+li#wp-admin-bar-developer-tool .dashicons-dashboard:before {
     content: "\f226";
 }
 
-.dashicons-before:before {
+li#wp-admin-bar-developer-tool .dashicons-before:before {
     display: inline-block;
     line-height: 1;
     font-family: dashicons;

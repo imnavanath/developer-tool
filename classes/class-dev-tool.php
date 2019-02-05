@@ -21,7 +21,7 @@ if ( ! class_exists( 'Dev_Tool' ) ) {
 
 			// Add required actions.
 			add_action( 'admin_bar_init', array( $this, 'init' ) );
-			add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
+			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		}
 
 		/**
@@ -46,12 +46,13 @@ if ( ! class_exists( 'Dev_Tool' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		function init() {
+		public function init() {
 
 			// Load the appropriate text-domain.
 			self::load_plugin_textdomain();
 
 			// Add required action for admin menu.
+			add_action( 'wp_head', array( $this, 'dev_tool_enqueue_styles' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'dev_tool_enqueue_styles' ) );
 			add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 1000 );
 
@@ -95,9 +96,9 @@ if ( ! class_exists( 'Dev_Tool' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		function admin_menu() {
+		public function admin_menu() {
 
-			add_submenu_page( 'options-general.php', 'Developer Tool', 'Developer Tool', 'manage_options', 'dev_tool_settings', array( &$this, 'dev_settings_page' ) );
+			add_submenu_page( 'options-general.php', 'Developer Tool', 'Developer Tool', 'manage_options', 'dev_tool_settings', array( $this, 'dev_settings_page' ) );
 		}
 
 		/**
@@ -105,16 +106,21 @@ if ( ! class_exists( 'Dev_Tool' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		function dev_tool_enqueue_styles() {
+		public function dev_tool_enqueue_styles() {
 
 			// Enqueue required styles.
-			wp_enqueue_style( 'developer-tool-style', DEV_TOOL_PLUGIN_URL . 'assets/style.css' );
+			wp_enqueue_style( 'developer-tool-style', DEV_TOOL_PLUGIN_URL . 'assets/style.css' ); ?>
+				<style type="text/css">
+					li#wp-admin-bar-developer-tool.highlight_error {
+						background: red !important;
+					}
+				</style>
+			<?php
 		}
 
-		function dev_settings_page() {
+		public function dev_settings_page() {
 
 			// Load options page.
-			require_once DEV_TOOL_PLUGIN_DIR . 'includes/functions.php';
 			require_once DEV_TOOL_PLUGIN_DIR . 'includes/settings.php';
 		}
 
@@ -124,9 +130,17 @@ if ( ! class_exists( 'Dev_Tool' ) ) {
 		 * @since 1.0.0
 		 * @return void
 		 */
-		function admin_bar_menu( $admin_bar ) {
+		public function admin_bar_menu( $admin_bar ) {
 
-			$classes = apply_filters( 'developer_tool_classes', array() );
+			require_once DEV_TOOL_PLUGIN_DIR . 'includes/functions.php';
+
+			$classes = '';
+
+			if ( file_exists( get_home_path() . 'wp-content/debug.log' ) && 0 !== filesize ( get_home_path() . 'wp-content/debug.log' ) ) {
+				$classes = 'highlight_error';
+			} else {
+				$classes = 'no_error';
+			}
 
 			/* Add the main siteadmin menu item */
 			$admin_bar->add_menu( array(
@@ -147,10 +161,10 @@ if ( ! class_exists( 'Dev_Tool' ) ) {
 				'id'     => 'dev-tool-second-item',
 				'parent' => 'developer-tool',
 				'href'	 => 'options-general.php?page=dev_tool_settings',
-				'title'  => apply_filters( 'dev_tool_wp_bar_title', __( 'Debug Settings', 'developer-tool' ) ),
+				'title'  => apply_filters( 'dev_tool_wp_bar_title', __( 'Tool Settings', 'developer-tool' ) ),
 				'meta'   => array( 'class' => $classes ),
 			));
-		}	
+		}
 	}
 	
 	$GLOBALS['dev_tool'] = new Dev_Tool();

@@ -43,5 +43,22 @@ function on_dev_tool_plug_activate() {
 	update_option( 'dev_tool_plugin_redirect', true );
 }
 
+if ( ! function_exists( 'settings_navigation_link' ) ) :
+
+	/**
+	 * Astra Filters navigation to customizer
+	 *
+	 * @since 1.0.0
+	 */
+	function settings_navigation_link( $links ) {
+
+		$links = array_merge( array( '<a href="'. admin_url() . 'options-general.php?page=dev_tool_settings' .'">' . __( 'Settings' ) . '</a>' ), $links );
+		return $links;
+	}
+
+	add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'settings_navigation_link' );
+
+endif;
+
 // Load required file.
 require_once( DEV_TOOL_PLUGIN_DIR . 'classes/class-dev-tool.php' );
