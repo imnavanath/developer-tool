@@ -1,9 +1,9 @@
 === Developer Tool ===
 Contributors: navanathbhosale
 Requires at least: 4.4
-Tags: debug log, error log, wp-debug, wp-error
+Tags: debug log, error log, WP_DEBUG, wp-error, debug, development, error, wordpress
 Stable tag: 1.0.0
-Tested up to: 4.9.8
+Tested up to: 5.0.3
 License: GPLv2
 Requires PHP: 5.3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -16,8 +16,8 @@ Developer Tool helps you to debug your working environment. It shows you notices
 
 == Screenshots ==
 
-1. Option of Additional Script in theme's customizer 
-2. Editor panel for Head JS and Footer JS
+1. Settings page 
+2. Admin bar error highlighter
 
 == Frequently Asked Questions ==
 
